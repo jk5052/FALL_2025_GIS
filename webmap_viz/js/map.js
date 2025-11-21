@@ -36,22 +36,36 @@ function clearGenmojiMarkers() {
     genmojiMarkers = [];
 }
 
-// Add genmoji markers to map
-function addGenmojiMarkers(posts) {
+// Add genmoji markers to map (with real-time generation)
+async function addGenmojiMarkers(posts) {
     console.log('🎨 Adding genmoji markers to map...');
 
     clearGenmojiMarkers();
 
-    posts.forEach((post, index) => {
+    // Show loading indicator
+    showLoadingIndicator(posts.length);
+
+    let loaded = 0;
+
+    for (const post of posts) {
         // Skip if no location
-        if (!post.lat || !post.lng) return;
+        if (!post.lat || !post.lng) continue;
+
+        // Generate genmoji in real-time using Firebase Function
+        let genmojiUrl = post.genmoji || 'images/default-genmoji.svg';
+
+        if (!post.genmoji && window.generateGenmojiFromPost) {
+            try {
+                genmojiUrl = await window.generateGenmojiFromPost(post);
+            } catch (error) {
+                console.error('Failed to generate genmoji:', error);
+                genmojiUrl = post.imageThumbnail || 'images/default-genmoji.svg';
+            }
+        }
 
         // Create marker element
         const el = document.createElement('div');
         el.className = 'genmoji-marker';
-
-        // Use genmoji if available, otherwise fallback
-        const genmojiUrl = post.genmoji || post.imageThumbnail || 'images/default-genmoji.svg';
 
         el.innerHTML = `
             <div class="genmoji-wrapper">
@@ -83,9 +97,52 @@ function addGenmojiMarkers(posts) {
             .addTo(map);
 
         genmojiMarkers.push(marker);
-    });
 
+        // Update loading indicator
+        loaded++;
+        updateLoadingIndicator(loaded, posts.length);
+    }
+
+    hideLoadingIndicator();
     console.log(`✅ Added ${genmojiMarkers.length} genmoji markers`);
+}
+
+// Loading indicator functions
+function showLoadingIndicator(total) {
+    const indicator = document.createElement('div');
+    indicator.id = 'genmoji-loading';
+    indicator.className = 'genmoji-loading';
+    indicator.innerHTML = `
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Generating genmojis...</div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text"><span id="progress-current">0</span> / ${total}</div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(indicator);
+}
+
+function updateLoadingIndicator(current, total) {
+    const progressFill = document.getElementById('progress-fill');
+    const progressCurrent = document.getElementById('progress-current');
+
+    if (progressFill && progressCurrent) {
+        const percent = (current / total) * 100;
+        progressFill.style.width = `${percent}%`;
+        progressCurrent.textContent = current;
+    }
+}
+
+function hideLoadingIndicator() {
+    const indicator = document.getElementById('genmoji-loading');
+    if (indicator) {
+        indicator.remove();
+    }
 }
 
 // Show quick preview on hover

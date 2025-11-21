@@ -1,0 +1,172 @@
+{
+  "2024-04-05": {
+    "date": "2024-04-05",
+    "event": "NYC Earthquake",
+    "prompt": "Find balance in the court between penthouse and tracks",
+    "context": {
+      "event": "earthquake",
+      "mood": "shock",
+      "date": "2024-04-05",
+      "timeOfDay": "afternoon",
+      "dayOfWeek": "Thursday"
+    },
+    "searchKeywords": [
+      "nyc",
+      "manhattan",
+      "newyork",
+      "balance",
+      "peaceful",
+      "harmony",
+      "tracks",
+      "bridge",
+      "tunnel",
+      "subway",
+      "penthouse",
+      "skyscraper",
+      "tower",
+      "brownstone",
+      "court"
+    ],
+    "responses": [],
+    "statistics": {
+      "total": 0,
+      "instagram": 0,
+      "tiktok": 0
+    }
+  },
+  "2024-04-08": {
+    "date": "2024-04-08",
+    "event": "Total Solar Eclipse",
+    "prompt": "Find livid in the court between skyscraper and port",
+    "context": {
+      "event": "eclipse",
+      "mood": "wonder",
+      "date": "2024-04-08",
+      "timeOfDay": "afternoon",
+      "dayOfWeek": "Sunday"
+    },
+    "searchKeywords": [
+      "nyc",
+      "manhattan",
+      "newyork",
+      "livid",
+      "angry",
+      "mad",
+      "furious",
+      "port",
+      "bridge",
+      "tunnel",
+      "subway",
+      "skyscraper",
+      "tower",
+      "brownstone",
+      "court"
+    ],
+    "responses": [],
+    "statistics": {
+      "total": 0,
+      "instagram": 0,
+      "tiktok": 0
+    }
+  },
+  "2024-05-30": {
+    "date": "2024-05-30",
+    "event": "Trump Conviction",
+    "prompt": "Capture city's heartbeat at afternoon",
+    "context": {
+      "event": "conviction",
+      "mood": "tension",
+      "date": "2024-05-30",
+      "timeOfDay": "afternoon",
+      "dayOfWeek": "Wednesday"
+    },
+    "searchKeywords": [
+      "nyc",
+      "manhattan",
+      "newyork",
+      "noon",
+      "midday",
+      "lunch",
+      "afternoon",
+      "pm",
+      "teatime",
+      "capture",
+      "make",
+      "create",
+      "build",
+      "hear",
+      "listen"
+    ],
+    "responses": [],
+    "statistics": {
+      "total": 0,
+      "instagram": 0,
+      "tiktok": 0
+    }
+  },
+  "2024-11-05": {
+    "date": "2024-11-05",
+    "event": "Election Day",
+    "prompt": "Document individual laugh in collective crawl",
+    "context": {
+      "event": "election",
+      "mood": "anticipation",
+      "date": "2024-11-05",
+      "timeOfDay": "afternoon",
+      "dayOfWeek": "Monday"
+    },
+    "searchKeywords": [
+      "nyc",
+      "manhattan",
+      "newyork",
+      "crawl",
+      "walk",
+      "run",
+      "rush",
+      "laugh",
+      "meet",
+      "greet",
+      "talk",
+      "document",
+      "make",
+      "create",
+      "build"
+    ],
+    "responses": [],
+    "statistics": {
+      "total": 0,
+      "instagram": 0,
+      "tiktok": 0
+    }
+  },
+  "2024-12-09": {
+    "date": "2024-12-09",
+    "event": "First Snow",
+    "prompt": "Find the weight of imagination",
+    "context": {
+      "event": "snow",
+      "mood": "transformation",
+      "date": "2024-12-09",
+      "timeOfDay": "afternoon",
+      "dayOfWeek": "Sunday"
+    },
+    "searchKeywords": [
+      "nyc",
+      "manhattan",
+      "newyork",
+      "imagination",
+      "being",
+      "existence",
+      "presence",
+      "afternoon",
+      "pm",
+      "snow"
+    ],
+    "responses": [],
+    "statistics": {
+      "total": 0,
+      "instagram": 0,
+      "tiktok": 0
+    }
+  }
+}
