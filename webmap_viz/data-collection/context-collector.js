@@ -1,9 +1,13 @@
 // Context Collector - 실제 날씨 및 뉴스 데이터 수집
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-// API Keys (환경변수로 관리 권장)
-const WEATHER_API_KEY = 'your_openweather_api_key'; // OpenWeatherMap
-const NEWS_API_KEY = 'your_newsapi_key'; // NewsAPI
+// Load environment variables
+dotenv.config();
+
+// API Keys from environment variables
+const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
 
 // NYC 좌표
 const NYC_LAT = 40.7128;

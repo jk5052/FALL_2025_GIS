@@ -1,13 +1,16 @@
 // Daily Ritual - Firebase Configuration and Operations
 
-// Firebase configuration (replace with your config)
+// Firebase configuration
+// Note: Firebase client config is safe to expose publicly (it's designed to be public)
+// Security is handled by Firebase Security Rules, not by hiding the config
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDHoRfZH9AA4nhu28jvJ-SvChINyg3-yGM",
+    authDomain: "daily-ritual-nyc.firebaseapp.com",
+    projectId: "daily-ritual-nyc",
+    storageBucket: "daily-ritual-nyc.firebasestorage.app",
+    messagingSenderId: "1068466601428",
+    appId: "1:1068466601428:web:8ae553727f86959ddbea41",
+    measurementId: "G-9C5T72REN3"
 };
 
 // Initialize Firebase

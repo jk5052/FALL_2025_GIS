@@ -2,16 +2,20 @@
 // Run with: node collect.js
 
 import { ApifyClient } from 'apify-client';
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+// Load environment variables
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Initialize Apify client
 const client = new ApifyClient({
-    token: 'apify_api_6zOgJUwtmwjZV48HvQG78A2VD9OEKe0iPAT0'
+    token: process.env.APIFY_API_KEY
 });
 
 // NYC event dates and contexts

@@ -1,7 +1,9 @@
 // Global data storage
 let currentData = null;
 
-// Firebase configuration (same as daily-ritual)
+// Firebase configuration
+// Note: Firebase client config is safe to expose (it's public by design)
+// Only service account keys must be kept secret
 const firebaseConfig = {
     apiKey: "AIzaSyDHoRfZH9AA4nhu28jvJ-SvChINyg3-yGM",
     authDomain: "daily-ritual-nyc.firebaseapp.com",

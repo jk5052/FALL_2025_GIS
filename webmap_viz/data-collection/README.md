@@ -28,16 +28,25 @@ npm install
 
 ### 2. API 키 설정
 
-`context-collector.js` 파일에서 API 키를 설정하세요:
+`.env.example` 파일을 `.env`로 복사하고 API 키를 입력하세요:
 
-```javascript
-const WEATHER_API_KEY = 'your_openweather_api_key';
-const NEWS_API_KEY = 'your_newsapi_key';
+```bash
+cp .env.example .env
+```
+
+`.env` 파일 내용:
+```
+APIFY_API_KEY=your_apify_api_key_here
+WEATHER_API_KEY=your_openweather_api_key_here
+NEWS_API_KEY=your_newsapi_key_here
 ```
 
 **API 키 발급:**
+- Apify: https://console.apify.com/account/integrations
 - 날씨: https://openweathermap.org/api (무료)
 - 뉴스: https://newsapi.org/ (무료)
+
+**⚠️ 중요: `.env` 파일은 절대 Git에 커밋하지 마세요!**
 
 ### 3. Firebase 서비스 계정 키 설정
 
