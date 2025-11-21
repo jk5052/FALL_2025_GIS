@@ -7,13 +7,15 @@
   "scripts": {
     "collect": "node collect.js",
     "process": "node process.js",
+    "context": "node main.js",
     "all": "npm run collect && npm run process"
   },
   "dependencies": {
     "apify-client": "^2.9.0",
     "dotenv": "^16.4.1",
     "axios": "^1.6.0",
-    "firebase": "^10.7.1"
+    "firebase": "^10.7.1",
+    "firebase-admin": "^12.0.0"
   },
   "author": "Jayce",
   "license": "MIT"
