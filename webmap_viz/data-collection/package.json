@@ -8,6 +8,7 @@
     "collect": "node collect.js",
     "process": "node process.js",
     "context": "node main.js",
+    "targeted": "node targeted-collector.js",
     "all": "npm run collect && npm run process"
   },
   "dependencies": {
