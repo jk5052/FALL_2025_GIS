@@ -15,6 +15,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/genmoji-styles.css">
 </head>
 <body>
     <!-- Header -->
@@ -59,20 +60,16 @@
 
     <!-- Info Panel -->
     <div class="info-panel" id="info-panel">
-        <h3 id="event-title">Select a date to begin</h3>
-        <p id="prompt-text" class="prompt"></p>
+        <h3 id="current-event">Select a date to begin</h3>
+        <p id="current-prompt" class="prompt"></p>
         <div class="stats">
             <div class="stat">
                 <span class="stat-label">Responses:</span>
                 <span class="stat-value" id="response-count">0</span>
             </div>
             <div class="stat">
-                <span class="stat-label">Peak Hour:</span>
-                <span class="stat-value" id="peak-hour">-</span>
-            </div>
-            <div class="stat">
-                <span class="stat-label">Dominant Emotion:</span>
-                <span class="stat-value" id="dominant-emotion">-</span>
+                <span class="stat-label">With Genmoji:</span>
+                <span class="stat-value" id="genmoji-count">0</span>
             </div>
         </div>
         <div id="keyword-cloud" class="keyword-cloud"></div>

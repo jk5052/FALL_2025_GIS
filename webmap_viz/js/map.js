@@ -1,4 +1,4 @@
-// Daily Ritual - Main Map Visualization with Blur Effects & Photo Thumbnails
+// Daily Ritual - Main Map Visualization with Genmoji Sticker Markers
 
 // Mapbox Access Token
 mapboxgl.accessToken = 'pk.eyJ1IjoiamF5Y2VrIiwiYSI6ImNtaThkY2UzMDBiM3kya3B0cjJtbWxxeDMifQ.LVC8qzfwKQl0DEgAOYOwAg';
@@ -8,7 +8,7 @@ let map;
 let currentData = [];
 let currentDate = null;
 let currentPlatform = 'all';
-let hoveredStateId = null;
+let genmojiMarkers = []; // Store all genmoji markers
 
 // Initialize map
 function initMap() {
@@ -23,7 +23,6 @@ function initMap() {
 
     map.on('load', () => {
         console.log('Map loaded');
-        setupLayers();
         loadData();
     });
 
@@ -31,225 +30,143 @@ function initMap() {
     map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 }
 
-// Setup map layers with blur effects
-function setupLayers() {
-    // Add empty source for social data
-    map.addSource('social-posts', {
-        type: 'geojson',
-        data: {
-            type: 'FeatureCollection',
-            features: []
-        },
-        cluster: true,
-        clusterMaxZoom: 14,
-        clusterRadius: 50
-    });
+// Clear all genmoji markers
+function clearGenmojiMarkers() {
+    genmojiMarkers.forEach(marker => marker.remove());
+    genmojiMarkers = [];
+}
 
-    // 1. 블러 효과를 위한 큰 원 (배경 - 가장 큰 블러)
-    map.addLayer({
-        id: 'posts-blur',
-        type: 'circle',
-        source: 'social-posts',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-            'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                10, 20,
-                15, 40
-            ],
-            'circle-color': [
-                'match',
-                ['get', 'platform'],
-                'instagram', '#E1306C',
-                'tiktok', '#FF0050',
-                'twitter', '#1DA1F2',
-                'facebook', '#4267B2',
-                '#888888'
-            ],
-            'circle-opacity': 0.1,
-            'circle-blur': 1
-        }
-    });
+// Add genmoji markers to map
+function addGenmojiMarkers(posts) {
+    console.log('🎨 Adding genmoji markers to map...');
 
-    // 2. 중간 블러 레이어 (글로우 효과)
-    map.addLayer({
-        id: 'posts-glow',
-        type: 'circle',
-        source: 'social-posts',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-            'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                10, 12,
-                15, 25
-            ],
-            'circle-color': [
-                'match',
-                ['get', 'platform'],
-                'instagram', '#E1306C',
-                'tiktok', '#FF0050',
-                'twitter', '#1DA1F2',
-                'facebook', '#4267B2',
-                '#888888'
-            ],
-            'circle-opacity': 0.2,
-            'circle-blur': 0.8
-        }
-    });
+    clearGenmojiMarkers();
 
-    // 3. 핵심 포인트 (작은 원 - 핀포인트처럼)
-    map.addLayer({
-        id: 'posts-core',
-        type: 'circle',
-        source: 'social-posts',
-        filter: ['!', ['has', 'point_count']],
-        paint: {
-            'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                10, 3,
-                15, 8
-            ],
-            'circle-color': '#ffffff',
-            'circle-opacity': 0.9,
-            'circle-stroke-width': 2,
-            'circle-stroke-color': [
-                'match',
-                ['get', 'platform'],
-                'instagram', '#E1306C',
-                'tiktok', '#FF0050',
-                'twitter', '#1DA1F2',
-                'facebook', '#4267B2',
-                '#888888'
-            ],
-            'circle-stroke-opacity': 0.8
-        }
-    });
+    posts.forEach((post, index) => {
+        // Skip if no location
+        if (!post.lat || !post.lng) return;
 
-    // 4. 클러스터 레이어
-    map.addLayer({
-        id: 'clusters',
-        type: 'circle',
-        source: 'social-posts',
-        filter: ['has', 'point_count'],
-        paint: {
-            'circle-color': [
-                'step',
-                ['get', 'point_count'],
-                '#51bbd6',
-                10,
-                '#f1f075',
-                30,
-                '#f28cb1'
-            ],
-            'circle-radius': [
-                'step',
-                ['get', 'point_count'],
-                25,
-                10,
-                35,
-                30,
-                45
-            ],
-            'circle-blur': 0.6,
-            'circle-opacity': 0.7
-        }
-    });
+        // Create marker element
+        const el = document.createElement('div');
+        el.className = 'genmoji-marker';
 
-    // 5. 클러스터 숫자
-    map.addLayer({
-        id: 'cluster-count',
-        type: 'symbol',
-        source: 'social-posts',
-        filter: ['has', 'point_count'],
-        layout: {
-            'text-field': '{point_count_abbreviated}',
-            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            'text-size': 14
-        },
-        paint: {
-            'text-color': '#ffffff'
-        }
-    });
+        // Use genmoji if available, otherwise fallback
+        const genmojiUrl = post.genmoji || post.imageThumbnail || 'images/default-genmoji.svg';
 
-    // 호버 시 사진 썸네일 표시
-    let popup = new mapboxgl.Popup({
-        closeButton: false,
-        closeOnClick: false,
-        offset: 25
-    });
-
-    // 마우스 호버 이벤트
-    map.on('mouseenter', 'posts-core', (e) => {
-        map.getCanvas().style.cursor = 'pointer';
-
-        const properties = e.features[0].properties;
-        const coordinates = e.features[0].geometry.coordinates.slice();
-
-        // 사진 썸네일 포함한 팝업
-        const html = `
-            <div style="width: 200px;">
-                ${properties.imageUrl ? `
-                    <img src="${properties.imageUrl}"
-                         style="width: 100%;
-                                height: 150px;
-                                object-fit: cover;
-                                border-radius: 8px;
-                                margin-bottom: 8px;">
-                ` : ''}
-                <div style="padding: 8px;">
-                    <div style="font-size: 10px;
-                                color: #888;
-                                text-transform: uppercase;
-                                margin-bottom: 4px;">
-                        ${properties.platform} • ${properties.timeOfDay || 'unknown'}
-                    </div>
-                    <div style="font-size: 12px; margin-bottom: 8px;">
-                        ${properties.locationName || 'Manhattan'}
-                    </div>
-                    ${properties.keywords ? `
-                        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
-                            ${properties.keywords.split(',').map(k =>
-                                `<span style="background: rgba(99,102,241,0.1);
-                                             padding: 2px 6px;
-                                             border-radius: 4px;
-                                             font-size: 10px;
-                                             color: #6366f1;">
-                                    ${k.trim()}
-                                </span>`
-                            ).join('')}
-                        </div>
-                    ` : ''}
-                </div>
+        el.innerHTML = `
+            <div class="genmoji-wrapper">
+                <img src="${genmojiUrl}" alt="genmoji" onerror="this.src='images/default-genmoji.svg'" />
+                <div class="genmoji-glow"></div>
             </div>
         `;
 
-        popup.setLngLat(coordinates)
-            .setHTML(html)
+        // Add click event
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showPostModal(post, genmojiUrl);
+        });
+
+        // Add hover events
+        el.addEventListener('mouseenter', () => {
+            el.classList.add('hover');
+            showQuickPreview(post, el);
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.classList.remove('hover');
+            hideQuickPreview();
+        });
+
+        // Create and add marker
+        const marker = new mapboxgl.Marker(el)
+            .setLngLat([post.lng, post.lat])
             .addTo(map);
+
+        genmojiMarkers.push(marker);
     });
 
-    map.on('mouseleave', 'posts-core', () => {
-        map.getCanvas().style.cursor = '';
-        popup.remove();
-    });
-
-    // 클릭 시 큰 이미지 모달
-    map.on('click', 'posts-core', (e) => {
-        const properties = e.features[0].properties;
-
-        if (properties.imageUrl) {
-            showImageModal(properties);
-        }
-    });
+    console.log(`✅ Added ${genmojiMarkers.length} genmoji markers`);
 }
 
-// 이미지 모달 함수
+// Show quick preview on hover
+function showQuickPreview(post, element) {
+    const preview = document.createElement('div');
+    preview.className = 'quick-preview';
+    preview.id = 'quick-preview';
+
+    const rect = element.getBoundingClientRect();
+
+    preview.innerHTML = `
+        <div class="preview-content">
+            ${post.imageUrl ? `<img src="${post.imageUrl}" class="preview-image" />` : ''}
+            <div class="preview-text">${post.text ? post.text.substring(0, 100) + '...' : 'No caption'}</div>
+            <div class="preview-meta">
+                <span class="preview-platform">${post.platform}</span>
+                <span class="preview-engagement">💜 ${post.engagement || 0}</span>
+            </div>
+        </div>
+    `;
+
+    preview.style.left = `${rect.left + rect.width / 2}px`;
+    preview.style.top = `${rect.top - 10}px`;
+
+    document.body.appendChild(preview);
+}
+
+// Hide quick preview
+function hideQuickPreview() {
+    const preview = document.getElementById('quick-preview');
+    if (preview) {
+        preview.remove();
+    }
+}
+
+// Show post modal
+function showPostModal(post, genmojiUrl) {
+    const modal = document.createElement('div');
+    modal.className = 'post-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <img src="${genmojiUrl}" class="modal-genmoji" onerror="this.src='images/default-genmoji.svg'" />
+                <div class="modal-info">
+                    <h3>${post.location || 'Manhattan, NYC'}</h3>
+                    <p>${post.platform} • ${new Date(post.timestamp).toLocaleDateString()}</p>
+                </div>
+            </div>
+            <div class="modal-body">
+                ${post.imageUrl ? `<img src="${post.imageUrl}" class="modal-photo" />` : ''}
+                ${post.hashtags && post.hashtags.length > 0 ? `
+                    <div class="keywords">
+                        ${post.hashtags.map(tag => `<span class="keyword-tag">#${tag}</span>`).join('')}
+                    </div>
+                ` : ''}
+                ${post.text ? `<p class="original-text">${post.text}</p>` : ''}
+            </div>
+            <div class="modal-footer">
+                <span class="engagement">💜 ${post.engagement || 0}</span>
+                <span class="timestamp">${new Date(post.timestamp).toLocaleString()}</span>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close button
+    modal.querySelector('.close').onclick = () => {
+        modal.remove();
+    };
+
+    // Click outside to close
+    modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+    };
+}
+
+// Old blur layer setup and event handlers - REMOVED (now using genmoji markers)
+
+// Image modal function (kept for compatibility)
 function showImageModal(properties) {
     const modalHtml = `
         <div id="image-modal" style="
@@ -293,19 +210,44 @@ function showImageModal(properties) {
     document.body.insertAdjacentHTML('beforeend', modalHtml);
 }
 
-// Load data
+// Load data and display genmoji markers
 async function loadData() {
     try {
-        // In production, this would fetch from your processed data
-        const response = await fetch('data/processed/sample-data.json');
+        // Try to load targeted ritual data with genmojis
+        const response = await fetch('json/targeted-ritual-data.json');
         const data = await response.json();
         currentData = data;
         console.log('Data loaded:', data);
+
+        // Display first event by default
+        const firstDate = Object.keys(data)[0];
+        if (firstDate) {
+            displayEvent(firstDate);
+        }
     } catch (error) {
         console.error('Error loading data:', error);
         // Use demo data if file not found
         currentData = generateDemoData();
+        displayEvent(Object.keys(currentData)[0]);
     }
+}
+
+// Display event data on map
+function displayEvent(date) {
+    const eventData = currentData[date];
+    if (!eventData) return;
+
+    console.log(`Displaying event: ${eventData.event} (${date})`);
+
+    // Update UI
+    document.getElementById('current-event').textContent = eventData.event;
+    document.getElementById('current-prompt').textContent = eventData.prompt;
+    document.getElementById('response-count').textContent = eventData.responses.length;
+
+    // Add genmoji markers
+    addGenmojiMarkers(eventData.responses);
+
+    currentDate = date;
 }
 
 // Generate demo data for testing

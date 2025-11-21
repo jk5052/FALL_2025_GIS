@@ -1,7 +1,8 @@
-// Targeted Collector - Daily Ritual 스타일 프롬프트로 소셜 미디어 데이터 수집
+// Targeted Collector - Daily Ritual 스타일 프롬프트로 소셜 미디어 데이터 수집 + 젠모지 생성
 
 import { ApifyClient } from 'apify-client';
 import { RitualPromptGenerator } from './enhanced-keyword-system.js';
+import GenmojiGenerator from './genmoji-generator.js';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
@@ -128,14 +129,14 @@ async function collectTikTok(keywords, limit = 30) {
 }
 
 /**
- * 메인 수집 함수
+ * 메인 수집 함수 (젠모지 생성 포함)
  */
 async function collectForEvent(date, eventData) {
     console.log(`\n📅 ${date}: ${eventData.event}`);
-    
+
     // 프롬프트 생성기
     const promptGen = new RitualPromptGenerator();
-    
+
     // 컨텍스트 구성
     const context = {
         ...eventData.context,
@@ -143,23 +144,44 @@ async function collectForEvent(date, eventData) {
         timeOfDay: 'afternoon',
         dayOfWeek: new Date(date).toLocaleDateString('en-US', { weekday: 'long' })
     };
-    
+
     // Daily Ritual 스타일 프롬프트 생성
     const { prompt, searchKeywords } = promptGen.generateRitualPrompt(context);
-    
+
     console.log(`  💭 Prompt: "${prompt}"`);
     console.log(`  🔑 Keywords: ${searchKeywords.slice(0, 10).join(', ')}...`);
-    
+
     // 소셜 미디어 데이터 수집
     const [instagramPosts, tiktokPosts] = await Promise.all([
         collectInstagram(searchKeywords, 50),
         collectTikTok(searchKeywords, 30)
     ]);
-    
+
     const allPosts = [...instagramPosts, ...tiktokPosts];
-    
+
     console.log(`  ✅ Collected ${allPosts.length} responses`);
-    
+
+    // 젠모지 생성
+    console.log(`  🎨 Generating genmojis...`);
+    const genmojiGen = new GenmojiGenerator();
+
+    for (let i = 0; i < allPosts.length; i++) {
+        const post = allPosts[i];
+        try {
+            const genmojiPath = await genmojiGen.generateGenmoji(post, `${date}_${i}`);
+            post.genmoji = genmojiPath;
+        } catch (error) {
+            console.error(`    ❌ Failed to generate genmoji for post ${i}:`, error.message);
+        }
+
+        // API 레이트 리밋 방지 (1초 딜레이)
+        if (i < allPosts.length - 1) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
+    }
+
+    genmojiGen.printStats();
+
     return {
         date: date,
         event: eventData.event,
@@ -170,7 +192,8 @@ async function collectForEvent(date, eventData) {
         statistics: {
             total: allPosts.length,
             instagram: instagramPosts.length,
-            tiktok: tiktokPosts.length
+            tiktok: tiktokPosts.length,
+            withGenmoji: allPosts.filter(p => p.genmoji).length
         }
     };
 }
