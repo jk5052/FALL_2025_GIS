@@ -1,0 +1,11 @@
+{
+  "name": "daily-ritual-prototype",
+  "version": "1.0.0",
+  "description": "Daily Ritual working prototype",
+  "main": "index.html",
+  "scripts": {
+    "start": "open index.html"
+  },
+  "author": "Jayce",
+  "license": "MIT"
+}

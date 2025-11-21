@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Ritual - Participate</title>
+    
+    <!-- Mapbox -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- Firebase -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div id="intro-screen" class="screen active">
+        <div class="content">
+            <h1>Daily Ritual</h1>
+            <p class="subtitle">A participatory emotional mapping of Manhattan</p>
+            
+            <div class="prompt-card">
+                <p class="prompt-label">Today's Prompt:</p>
+                <h2 id="daily-prompt" class="prompt-text">Loading...</h2>
+                <p class="prompt-date" id="prompt-date"></p>
+            </div>
+            
+            <button id="participate-btn" class="primary-btn">Participate</button>
+            <button id="view-map-btn" class="secondary-btn">View Today's Map</button>
+            
+            <div class="demo-mode">
+                <button id="demo-btn" class="demo-btn">Demo Mode</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Screen -->
+    <div id="upload-screen" class="screen">
+        <div class="content">
+            <div class="header">
+                <button class="back-btn" id="back-to-intro">←</button>
+                <h2>Respond to Today's Prompt</h2>
+            </div>
+            
+            <div class="prompt-reminder">
+                <p id="prompt-reminder-text">Loading prompt...</p>
+            </div>
+            
+            <!-- Photo Upload -->
+            <div class="upload-section">
+                <label for="photo-input" class="upload-label">
+                    <div id="photo-preview" class="photo-preview">
+                        <span class="upload-icon">📷</span>
+                        <span class="upload-text">Add your photo</span>
+                    </div>
+                </label>
+                <input type="file" id="photo-input" accept="image/*" hidden>
+            </div>
+            
+            <!-- Keywords -->
+            <div class="keywords-section">
+                <label>Add 3-5 keywords that capture this moment:</label>
+                <div class="keyword-inputs">
+                    <input type="text" class="keyword-input" placeholder="Keyword 1" maxlength="20">
+                    <input type="text" class="keyword-input" placeholder="Keyword 2" maxlength="20">
+                    <input type="text" class="keyword-input" placeholder="Keyword 3" maxlength="20">
+                    <input type="text" class="keyword-input" placeholder="Keyword 4 (optional)" maxlength="20">
+                    <input type="text" class="keyword-input" placeholder="Keyword 5 (optional)" maxlength="20">
+                </div>
+            </div>
+            
+            <!-- Location (fuzzy) -->
+            <div class="location-section">
+                <label>Approximate location:</label>
+                <select id="location-select">
+                    <option value="">Select neighborhood...</option>
+                    <option value="40.7831,-73.9712">Upper West Side</option>
+                    <option value="40.7870,-73.9754">Upper East Side</option>
+                    <option value="40.7614,-73.9776">Midtown</option>
+                    <option value="40.7489,-73.9872">Chelsea</option>
+                    <option value="40.7336,-74.0027">Greenwich Village</option>
+                    <option value="40.7282,-73.9942">East Village</option>
+                    <option value="40.7211,-74.0048">SoHo</option>
+                    <option value="40.7165,-74.0090">Tribeca</option>
+                    <option value="40.7074,-74.0113">Financial District</option>
+                    <option value="40.8014,-73.9654">Harlem</option>
+                </select>
+            </div>
+            
+            <!-- Submit -->
+            <button id="submit-btn" class="primary-btn" disabled>Submit Response</button>
+        </div>
+    </div>
+
+    <!-- Map Screen -->
+    <div id="map-screen" class="screen">
+        <div class="map-header">
+            <button class="back-btn" id="back-from-map">←</button>
+            <h2>Today's Emotional Map</h2>
+            <div class="map-stats">
+                <span id="response-count">0 responses</span>
+                <span id="current-time"></span>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+        
+        <!-- Floating Legend -->
+        <div class="map-legend">
+            <h4>Keywords</h4>
+            <div id="keyword-list"></div>
+        </div>
+        
+        <!-- Connection Toggle -->
+        <div class="map-controls">
+            <button id="toggle-connections" class="control-btn">Show Connections</button>
+            <button id="toggle-heat" class="control-btn active">Heat Map</button>
+        </div>
+    </div>
+
+    <!-- Success Screen -->
+    <div id="success-screen" class="screen">
+        <div class="content">
+            <div class="success-icon">✓</div>
+            <h2>Thank you for participating</h2>
+            <p>Your response has been added to today's collective emotional map</p>
+            
+            <button id="view-final-map" class="primary-btn">View Map</button>
+            <button id="new-response" class="secondary-btn">Add Another Response</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/firebase.js"></script>
+    <script src="js/prompt.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
+    <script src="demo/demo-data.js"></script>
+</body>
+</html>

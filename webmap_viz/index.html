@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Ritual - NYC Social Data Visualization</title>
+    
+    <!-- Mapbox -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Daily Ritual: NYC Emotional Mapping</h1>
+        <p class="subtitle">Social media as collective emotional response</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <!-- Date Selector -->
+        <div class="date-control">
+            <label>Select Event Date:</label>
+            <select id="date-selector">
+                <option value="2024-04-05">Apr 5 - Earthquake</option>
+                <option value="2024-04-08">Apr 8 - Solar Eclipse</option>
+                <option value="2024-05-30">May 30 - Trump Conviction</option>
+                <option value="2024-11-05">Nov 5 - Election Day</option>
+                <option value="2024-12-09">Dec 9 - First Snow</option>
+            </select>
+        </div>
+
+        <!-- Platform Filters -->
+        <div class="platform-filters">
+            <button class="filter-btn active" data-platform="all">All</button>
+            <button class="filter-btn" data-platform="instagram">Instagram</button>
+            <button class="filter-btn" data-platform="tiktok">TikTok</button>
+            <button class="filter-btn" data-platform="twitter">Twitter</button>
+            <button class="filter-btn" data-platform="facebook">Facebook</button>
+        </div>
+
+        <!-- Time Slider -->
+        <div class="time-control">
+            <label>Time of Day:</label>
+            <input type="range" id="time-slider" min="0" max="23" value="12">
+            <span id="time-display">12:00</span>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" id="info-panel">
+        <h3 id="event-title">Select a date to begin</h3>
+        <p id="prompt-text" class="prompt"></p>
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-label">Responses:</span>
+                <span class="stat-value" id="response-count">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Peak Hour:</span>
+                <span class="stat-value" id="peak-hour">-</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Dominant Emotion:</span>
+                <span class="stat-value" id="dominant-emotion">-</span>
+            </div>
+        </div>
+        <div id="keyword-cloud" class="keyword-cloud"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/map.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/layer.js"></script>
+    <script src="js/analysis.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

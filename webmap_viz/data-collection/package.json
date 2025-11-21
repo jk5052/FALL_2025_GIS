@@ -1,0 +1,20 @@
+{
+  "name": "webmap-viz-data-collection",
+  "version": "1.0.0",
+  "description": "Social media data collection for Daily Ritual visualization",
+  "type": "module",
+  "main": "collect.js",
+  "scripts": {
+    "collect": "node collect.js",
+    "process": "node process.js",
+    "all": "npm run collect && npm run process"
+  },
+  "dependencies": {
+    "apify-client": "^2.9.0",
+    "dotenv": "^16.4.1",
+    "axios": "^1.6.0",
+    "firebase": "^10.7.1"
+  },
+  "author": "Jayce",
+  "license": "MIT"
+}

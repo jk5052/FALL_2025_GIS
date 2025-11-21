@@ -1,0 +1,46 @@
+[
+  {
+    "platform": "instagram",
+    "text": "",
+    "hashtags": [],
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0,
+    "user": "anonymous",
+    "eventContext": "4.8 Magnitude Earthquake",
+    "eventDate": "2024-04-05"
+  },
+  {
+    "platform": "instagram",
+    "text": "",
+    "hashtags": [],
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0,
+    "user": "anonymous",
+    "eventContext": "Total Solar Eclipse",
+    "eventDate": "2024-04-08"
+  },
+  {
+    "platform": "instagram",
+    "text": "",
+    "hashtags": [],
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0,
+    "user": "anonymous",
+    "eventContext": "Trump Conviction",
+    "eventDate": "2024-05-30"
+  },
+  {
+    "platform": "instagram",
+    "text": "",
+    "hashtags": [],
+    "likes": 0,
+    "comments": 0,
+    "engagement": 0,
+    "user": "anonymous",
+    "eventContext": "First Snow",
+    "eventDate": "2024-12-09"
+  }
+]

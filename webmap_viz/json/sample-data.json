@@ -1,0 +1,186 @@
+{
+  "2024-04-05": {
+    "event": "4.8 Magnitude Earthquake",
+    "prompt": "Find where stillness lives after everything moves",
+    "responses": [
+      {
+        "id": "eq_001",
+        "participantId": "user_abc_5",
+        "platform": "instagram",
+        "timestamp": "2024-04-05T14:23:00",
+        "lat": 40.7589,
+        "lng": -73.9851,
+        "keywords": ["shaken", "stillness", "survived", "grateful"],
+        "engagement": 245,
+        "timeOfDay": "afternoon"
+      },
+      {
+        "id": "eq_002",
+        "participantId": "user_def_7",
+        "platform": "twitter",
+        "timestamp": "2024-04-05T14:25:00",
+        "lat": 40.7489,
+        "lng": -73.9751,
+        "keywords": ["earthquake", "scared", "nyc", "unreal"],
+        "engagement": 89,
+        "timeOfDay": "afternoon"
+      },
+      {
+        "id": "eq_003",
+        "participantId": "user_ghi_4",
+        "platform": "tiktok",
+        "timestamp": "2024-04-05T14:30:00",
+        "lat": 40.7289,
+        "lng": -74.0051,
+        "keywords": ["shaking", "caught", "video", "crazy"],
+        "engagement": 1523,
+        "timeOfDay": "afternoon"
+      }
+    ]
+  },
+  "2024-04-08": {
+    "event": "Total Solar Eclipse",
+    "prompt": "Document three shadows that don't belong to you",
+    "responses": [
+      {
+        "id": "ec_001",
+        "participantId": "user_jkl_8",
+        "platform": "instagram",
+        "timestamp": "2024-04-08T13:45:00",
+        "lat": 40.7829,
+        "lng": -73.9654,
+        "keywords": ["eclipse", "cosmic", "rare", "together"],
+        "engagement": 567,
+        "timeOfDay": "afternoon"
+      },
+      {
+        "id": "ec_002",
+        "participantId": "user_mno_6",
+        "platform": "facebook",
+        "timestamp": "2024-04-08T13:50:00",
+        "lat": 40.7729,
+        "lng": -73.9754,
+        "keywords": ["totality", "amazing", "once", "lifetime"],
+        "engagement": 234,
+        "timeOfDay": "afternoon"
+      }
+    ]
+  },
+  "2024-05-30": {
+    "event": "Trump Convicted on 34 Counts",
+    "prompt": "Where does justice wait in Manhattan?",
+    "responses": [
+      {
+        "id": "tc_001",
+        "participantId": "user_pqr_9",
+        "platform": "twitter",
+        "timestamp": "2024-05-30T16:30:00",
+        "lat": 40.7211,
+        "lng": -74.0033,
+        "keywords": ["guilty", "historic", "justice", "finally"],
+        "engagement": 892,
+        "timeOfDay": "evening"
+      },
+      {
+        "id": "tc_002",
+        "participantId": "user_stu_5",
+        "platform": "instagram",
+        "timestamp": "2024-05-30T16:45:00",
+        "lat": 40.7311,
+        "lng": -74.0133,
+        "keywords": ["courthouse", "history", "witnessed", "manhattan"],
+        "engagement": 445,
+        "timeOfDay": "evening"
+      }
+    ]
+  },
+  "2024-11-05": {
+    "event": "Presidential Election Day",
+    "prompt": "What accumulates in the space between choices?",
+    "responses": [
+      {
+        "id": "el_001",
+        "participantId": "user_vwx_7",
+        "platform": "instagram",
+        "timestamp": "2024-11-05T08:30:00",
+        "lat": 40.7589,
+        "lng": -73.9851,
+        "keywords": ["voted", "democracy", "hopeful", "anxious"],
+        "engagement": 234,
+        "timeOfDay": "morning"
+      },
+      {
+        "id": "el_002",
+        "participantId": "user_yz1_4",
+        "platform": "twitter",
+        "timestamp": "2024-11-05T09:15:00",
+        "lat": 40.7489,
+        "lng": -73.9751,
+        "keywords": ["election", "waiting", "nervous", "important"],
+        "engagement": 567,
+        "timeOfDay": "morning"
+      },
+      {
+        "id": "el_003",
+        "participantId": "user_234_8",
+        "platform": "tiktok",
+        "timestamp": "2024-11-05T12:00:00",
+        "lat": 40.7389,
+        "lng": -73.9951,
+        "keywords": ["line", "voting", "civic", "duty"],
+        "engagement": 890,
+        "timeOfDay": "midday"
+      },
+      {
+        "id": "el_004",
+        "participantId": "user_567_6",
+        "platform": "facebook",
+        "timestamp": "2024-11-05T18:00:00",
+        "lat": 40.7689,
+        "lng": -73.9651,
+        "keywords": ["results", "watching", "tense", "together"],
+        "engagement": 123,
+        "timeOfDay": "evening"
+      }
+    ]
+  },
+  "2024-12-09": {
+    "event": "First Snow of the Season",
+    "prompt": "Show me what remains warm",
+    "responses": [
+      {
+        "id": "sn_001",
+        "participantId": "user_890_5",
+        "platform": "instagram",
+        "timestamp": "2024-12-09T07:30:00",
+        "lat": 40.7829,
+        "lng": -73.9654,
+        "keywords": ["firstsnow", "magical", "quiet", "transformed"],
+        "engagement": 678,
+        "timeOfDay": "morning"
+      },
+      {
+        "id": "sn_002",
+        "participantId": "user_abc_9",
+        "platform": "tiktok",
+        "timestamp": "2024-12-09T08:00:00",
+        "lat": 40.7729,
+        "lng": -73.9754,
+        "keywords": ["snow", "peaceful", "beautiful", "winter"],
+        "engagement": 1234,
+        "timeOfDay": "morning"
+      },
+      {
+        "id": "sn_003",
+        "participantId": "user_def_3",
+        "platform": "twitter",
+        "timestamp": "2024-12-09T09:00:00",
+        "lat": 40.7629,
+        "lng": -73.9854,
+        "keywords": ["snowing", "nyc", "finally", "cozy"],
+        "engagement": 345,
+        "timeOfDay": "morning"
+      }
+    ]
+  }
+}
